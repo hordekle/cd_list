@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CD list!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <table class="table table-bordered" id="cdlist">
+        <thead>
+        <tr>
+            <th scope="col">Album</th>
+            <th scope="col">Interpret</th>
+            <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in list %}
+        <tr>
+            <td>{{ item.album }}</td>
+            <td>{{ item.interpret }}</td>
+            <td>{{ item.price }}</td>
+            <td>
+                <a class="btn btn-primary" href="{{ path('detail', {'id': item.id}) }}">Detail</a>
+                <a class="btn btn-danger" href="{{ path('delete', {'id': item.id}) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="container">
+        <p>
+            <a class="btn btn-success" href="{{ path('add') }}">Add</a>
+            <button class="btn btn-success" id="printbtn">Print</button>
+        </p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        function printList(){
+            var printme = document.getElementById('cdlist')
+            $("#cdlist td:nth-child(4)").hide();
+            wme = window.open("");
+            wme.document.write(printme.outerHTML);
+            wme.print();
+            wme.close();
+            $("#cdlist td:nth-child(4)").show();
+        }
+
+        $('#printbtn').on('click', function (){
+            printList();
+        })
+    </script>
+
+</div>
+{% endblock %}
